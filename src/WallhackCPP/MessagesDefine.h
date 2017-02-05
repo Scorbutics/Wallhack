@@ -1,0 +1,9 @@
+#ifndef MESSAGESDEFINE_H
+#define MESSAGESDEFINE_H
+
+#define PARAM_PARENT_HWND "-parentHwnd"
+
+#define MESSAGE_WALLHACKGUI_DEFAULT_TRANSPARENCY "Wallhack_GUI_Default_Transparency"
+#define MESSAGE_WALLHACKGUI_SHORTCUT "Wallhack_GUI_Shortcut"
+
+#endif // MESSAGESDEFINE_H

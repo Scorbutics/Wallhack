@@ -1,0 +1,75 @@
+#include <windows.h>
+#define DLLEXPORT __declspec(dllimport)
+#include "ShellHook.h"
+#include "CBTHook.h"
+#include "GetMsgHook.h"
+#include "CallWndProcHook.h"
+#include "MouseHook.h"
+#include "MouseLLHook.h"
+#include "KeyboardHook.h"
+#include "KeyboardLLHook.h"
+
+#include "MessagesDefine.h"
+#include "UserMessages.h"
+
+UserMessages::UserMessages() {
+    messages[MESSAGE_HOOK_WINDOW_CBT_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_REPLACED);
+    messages[MESSAGE_HOOK_WINDOW_CBT_ACTIVATE] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_ACTIVATE);
+    messages[MESSAGE_HOOK_WINDOW_CBT_CREATE_WINDOW] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_CREATE_WINDOW);
+    messages[MESSAGE_HOOK_WINDOW_CBT_DESTROY_WINDOW] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_DESTROY_WINDOW);
+    messages[MESSAGE_HOOK_WINDOW_CBT_MIN_MAX] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_MIN_MAX);
+    messages[MESSAGE_HOOK_WINDOW_CBT_MOVE_SIZE] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_MOVE_SIZE);
+    messages[MESSAGE_HOOK_WINDOW_CBT_SET_FOCUS] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_SET_FOCUS);
+    messages[MESSAGE_HOOK_WINDOW_CBT_SYSCOMMAND] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CBT_SYSCOMMAND);
+
+    messages[MESSAGE_HOOK_WINDOW_SHELL_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_REPLACED);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_ACTIVATESHELLWINDOW] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_ACTIVATESHELLWINDOW);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_GETMINRECT] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_GETMINRECT);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_REDRAW] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_REDRAW);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_LANGUAGE] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_LANGUAGE);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_TASKMAN] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_TASKMAN);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_WINDOWACTIVATED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_WINDOWACTIVATED);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_WINDOWCREATED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_WINDOWCREATED);
+    messages[MESSAGE_HOOK_WINDOW_SHELL_WINDOWDESTROYED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_SHELL_WINDOWDESTROYED);
+
+    messages[MESSAGE_HOOK_WINDOW_GETMSG_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_GETMSG_REPLACED);
+    messages[MESSAGE_HOOK_WINDOW_GETMSG] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_GETMSG);
+    messages[MESSAGE_HOOK_WINDOW_GETMSG_PARAMS] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_GETMSG_PARAMS);
+
+    messages[MESSAGE_HOOK_WINDOW_CALLWND_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CALLWND_REPLACED);
+    messages[MESSAGE_HOOK_WINDOW_CALLWND] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CALLWND);
+    messages[MESSAGE_HOOK_WINDOW_CALLWND_PARAMS] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_CALLWND_PARAMS);
+
+    messages[MESSAGE_HOOK_WINDOW_KEYBOARD] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_KEYBOARD);
+    messages[MESSAGE_HOOK_WINDOW_KEYBOARD_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_KEYBOARD_REPLACED);
+
+    messages[MESSAGE_HOOK_WINDOW_KEYBOARDLL] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_KEYBOARDLL);
+    messages[MESSAGE_HOOK_WINDOW_KEYBOARDLL_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_KEYBOARDLL_REPLACED);
+
+    messages[MESSAGE_HOOK_WINDOW_MOUSE] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_MOUSE);
+    messages[MESSAGE_HOOK_WINDOW_MOUSE_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_MOUSE_REPLACED);
+
+    messages[MESSAGE_HOOK_WINDOW_MOUSELL] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_MOUSELL);
+    messages[MESSAGE_HOOK_WINDOW_MOUSELL_REPLACED] = RegisterWindowMessageA(MESSAGE_HOOK_WINDOW_MOUSELL_REPLACED);
+
+    //SPECIAL WALLHACKGUI :
+    messages[MESSAGE_WALLHACKGUI_DEFAULT_TRANSPARENCY] = RegisterWindowMessageA(MESSAGE_WALLHACKGUI_DEFAULT_TRANSPARENCY);
+    messages[MESSAGE_WALLHACKGUI_SHORTCUT] = RegisterWindowMessageA(MESSAGE_WALLHACKGUI_SHORTCUT);
+}
+
+UINT UserMessages::getMessage(std::string mess) {
+    if(messages.find(mess) == messages.end()) {
+        return 0;
+    }
+    return messages[mess];
+}
+
+UserMessages& UserMessages::getInstance() {
+    static UserMessages usm;
+    return usm;
+}
+
+UserMessages::~UserMessages() {
+
+}
+
